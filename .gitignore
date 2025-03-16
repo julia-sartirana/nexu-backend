@@ -1,0 +1,17 @@
+# macOS system files
+.DS_Store
+
+# SQLite database for development (do not commit production databases)
+db.sqlite3
+
+# Python bytecode files and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment directories (adjust the name if needed)
+env/
+venv/
+
+# Local configuration files
+*.local
