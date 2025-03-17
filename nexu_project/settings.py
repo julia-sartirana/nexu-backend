@@ -25,7 +25,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-7@zku^^=j_#cy%km1!1u3
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 # Configura ALLOWED_HOSTS con la variable de entorno o con el dominio asignado en Heroku
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'nexu-backend-5f29872a89fe.herokuapp.com').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost,nexu-backend-5f29872a89fe.herokuapp.com').split(',')
+
 
 # Application definition
 
