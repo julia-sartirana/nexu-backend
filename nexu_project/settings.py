@@ -18,15 +18,12 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# Obtiene la SECRET_KEY desde la variable de entorno, o usa la clave de desarrollo (no recomendable en producción)
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-7@zku^^=j_#cy%km1!1u3=no0xk4xf)pqyd*e685kj+*wyaq9+')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# Configura ALLOWED_HOSTS con la variable de entorno o con el dominio asignado en Heroku
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost,nexu-backend-5f29872a89fe.herokuapp.com').split(',')
-
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'nexu-backend-5f29872a89fe.herokuapp.com,127.0.0.1,localhost').split(',')
 
 # Application definition
 
@@ -74,13 +71,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'nexu_project.wsgi.application'
 
 # Database
-# Por defecto se usa SQLite para desarrollo, pero se actualiza con dj_database_url en producción
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join('/tmp', 'db.sqlite3'),
+        }
+    }
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 if db_from_env:
