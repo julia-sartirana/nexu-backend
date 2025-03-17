@@ -20,8 +20,7 @@ The application uses Django's default database (SQLite) for development. The dat
 
 1. **Clone the repository:**
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/julia-sartirana/nexu-backend.git
    ```
 2. **Create and activate a virtual environment:**
    ```bash
