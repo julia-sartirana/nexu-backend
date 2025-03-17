@@ -42,7 +42,7 @@ class CarModelTests(APITestCase):
         model_instance = CarModel.objects.create(name='Accord', average_price=200000, brand=self.brand)
         url = reverse('car_model_update', kwargs={'pk': model_instance.id})
         data = {'average_price': 250000}
-        response = self.client.put(url, data, format='json')
+        response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         model_instance.refresh_from_db()
         self.assertEqual(model_instance.average_price, 250000)
