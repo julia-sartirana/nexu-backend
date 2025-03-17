@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(url='/brands/', permanent=False), name='home_redirect'),
     path('', include('brands.urls')),
 ]
