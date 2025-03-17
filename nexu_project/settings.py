@@ -82,7 +82,6 @@ DATABASES = {
     }
 }
 
-# Actualiza la configuración de la base de datos con la variable DATABASE_URL (usada por Heroku para PostgreSQL)
 db_from_env = dj_database_url.config(conn_max_age=500)
 if db_from_env:
     DATABASES['default'].update(db_from_env)
@@ -117,13 +116,9 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-# Configuración para servir archivos estáticos en producción
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
