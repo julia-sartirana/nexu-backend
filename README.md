@@ -52,3 +52,10 @@ The project includes tests to ensure that the endpoints and logic work correctly
 ```bash
 python manage.py test
 ```
+
+## Thought Process and Notes
+* The project uses Django REST Framework's generic views and ModelSerializers to minimize boilerplate code and keep the codebase clean.
+* The data import process is optimized by using bulk_create to reduce the number of database hits.
+* The endpoints have been built according to the exercise requirements, with appropriate validations to ensure data integrity.
+* Although SQLite is used for this exercise, for a production scenario I would recommend using PostgreSQL for improved performance and scalability.
+* Future improvements could include adding pagination to the endpoints returning large datasets and expanding the test suite.
