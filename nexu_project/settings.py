@@ -11,22 +11,20 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7@zku^^=j_#cy%km1!1u3=no0xk4xf)pqyd*e685kj+*wyaq9+'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-7@zku^^=j_#cy%km1!1u3=no0xk4xf)pqyd*e685kj+*wyaq9+')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
-
+# Configura ALLOWED_HOSTS con la variable de entorno o con el dominio asignado en Heroku
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'nexu-backend-5f29872a89fe.herokuapp.com').split(',')
 
 # Application definition
 
@@ -43,6 +41,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # Whitenoise para servir archivos estáticos en producción
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -71,10 +71,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'nexu_project.wsgi.application'
 
-
 # Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+# Por defecto se usa SQLite para desarrollo, pero se actualiza con dj_database_url en producción
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -82,6 +80,8 @@ DATABASES = {
     }
 }
 
+# Actualiza la configuración de la base de datos con la variable DATABASE_URL (usada por Heroku para PostgreSQL)
+DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -101,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -113,9 +112,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
